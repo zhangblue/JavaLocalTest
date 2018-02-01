@@ -3,6 +3,7 @@ package cn.com.guava.utils;
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
+import com.google.common.io.BaseEncoding;
 import java.util.List;
 
 /**
@@ -77,7 +78,7 @@ public class GuavaStringTools {
     }
 
     /**
-     * 删除字符串开头与结尾的内容
+     * 删除字符串开头的内容
      *
      * @param strLine
      * @param keywords
@@ -126,5 +127,9 @@ public class GuavaStringTools {
      */
     public List<String> splitStringByLength(String strLine, int nLength) {
         return Splitter.fixedLength(nLength).splitToList(strLine);
+    }
+
+    public String base64Encoding(String base64){
+        return new String(BaseEncoding.base64().decode(base64));
     }
 }

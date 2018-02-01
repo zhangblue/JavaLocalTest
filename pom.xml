@@ -11,6 +11,7 @@
   <modules>
     <module>GuavaTest</module>
     <module>AlibabaFashJson</module>
+    <module>ElasticSearch</module>
   </modules>
 
   <properties>
@@ -38,6 +39,20 @@
       <artifactId>junit</artifactId>
       <version>4.12</version>
       <scope>test</scope>
+    </dependency>
+
+    <!--apache commons-codec-->
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.10</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.2.45</version>
     </dependency>
 
   </dependencies>

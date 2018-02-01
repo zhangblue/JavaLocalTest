@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AlibabaFashJson/AlibabaFashJson.iml" filepath="$PROJECT_DIR$/AlibabaFashJson/AlibabaFashJson.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ElasticSearch/ElasticSearch.iml" filepath="$PROJECT_DIR$/ElasticSearch/ElasticSearch.iml" />
       <module fileurl="file://$PROJECT_DIR$/GuavaTest/GuavaTest.iml" filepath="$PROJECT_DIR$/GuavaTest/GuavaTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/JavaLocalTest.iml" filepath="$PROJECT_DIR$/JavaLocalTest.iml" />
     </modules>
