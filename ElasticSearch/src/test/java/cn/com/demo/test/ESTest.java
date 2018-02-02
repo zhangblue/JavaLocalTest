@@ -9,6 +9,7 @@ import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.ExistsQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermsQueryBuilder;
 import org.elasticsearch.search.SearchHit;
@@ -74,7 +75,7 @@ public class ESTest {
   public void doTest2() throws Exception {
 
 
-    GetRequestBuilder getRequestBuilder = EsRepository.client.prepareGet("index_message_20180201","bangcle_type","172.16.18.160_1517486253764_efcc6b7e-92d4-3ca2-8212-fae41fd17be9_102");
+    GetRequestBuilder getRequestBuilder = EsRepository.client.prepareGet("index_gyroscope_20180202","bangcle_type","dc771af6199de3cbebb02774119a77f4|366|284");
 
 
     GetResponse getResponse = getRequestBuilder.get();
@@ -83,10 +84,56 @@ public class ESTest {
 
     JSONArray jsonArray = JSONArray.parseArray(str);
 
+
+    JSONArray[] a = new JSONArray[jsonArray.size()];
+
+      jsonArray.toArray(a);
+
+    System.out.println(a.length);
+
     for(Object jsonObject:jsonArray.toArray()){
       System.out.println(jsonObject.toString());
     }
 
+  }
+
+  @Test
+  public void getTimeZoneFromStartMessage() throws Exception {
+
+    String udid="6688abcf-6f88-6868-888a-ed1a0bcc1320";
+
+    String agentId = "369";
+
+    String strResult = "";
+
+    BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
+    TermsQueryBuilder udidQueryBuilder = QueryBuilders
+        .termsQuery("udid", udid);
+    boolQueryBuilder.must(udidQueryBuilder);
+    TermsQueryBuilder agentidQueryBuilder = QueryBuilders.termsQuery("agent_id", agentId);
+    boolQueryBuilder.must(agentidQueryBuilder);
+
+
+    ExistsQueryBuilder existsQueryBuilder = QueryBuilders.existsQuery("time_zone");
+    boolQueryBuilder.must(existsQueryBuilder);
+
+
+    SearchRequestBuilder searchRequestBuilder = EsRepository.client
+        .prepareSearch("index_start_*")
+        .setTypes("bangcle_type").setQuery(boolQueryBuilder).setSize(1);
+
+    SearchResponse searchResponse = searchRequestBuilder.get();
+
+    SearchHit[] searchHits = searchResponse.getHits().getHits();
+
+    if (searchHits.length > 0) {
+      strResult = searchHits[0].getSourceAsMap().get("time_zone").toString();
+    } else {
+      strResult = "unknow";
+    }
+
+    System.out.println(strResult);
   }
 
 }
