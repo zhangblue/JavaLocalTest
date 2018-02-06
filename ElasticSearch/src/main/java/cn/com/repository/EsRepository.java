@@ -26,10 +26,10 @@ import org.elasticsearch.transport.client.PreBuiltTransportClient;
  */
 public class EsRepository {
 
-  public static TransportClient client = null;
-  public static BulkProcessor bulkProcessor = null;
+  public TransportClient client = null;
+  public BulkProcessor bulkProcessor = null;
   private String strClusterName = "bangcle_es";
-  public static String strType = "bangcle_type";//写死的值，后续会废弃
+  public String strType = "type_demo";//写死的值，后续会废弃
   private String strTransportHostNames = "172.16.31.99";
   private Splitter splitter = Splitter.on(",").trimResults();
 
@@ -216,5 +216,30 @@ public class EsRepository {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+
+  public TransportClient getClient() {
+    return client;
+  }
+
+  public void setClient(TransportClient client) {
+    this.client = client;
+  }
+
+  public BulkProcessor getBulkProcessor() {
+    return bulkProcessor;
+  }
+
+  public void setBulkProcessor(BulkProcessor bulkProcessor) {
+    this.bulkProcessor = bulkProcessor;
+  }
+
+  public String getStrClusterName() {
+    return strClusterName;
+  }
+
+  public void setStrClusterName(String strClusterName) {
+    this.strClusterName = strClusterName;
   }
 }
