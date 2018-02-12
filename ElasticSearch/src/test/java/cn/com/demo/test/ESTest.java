@@ -3,6 +3,12 @@ package cn.com.demo.test;
 
 import cn.com.repository.EsRepository;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Joiner;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import org.elasticsearch.action.get.GetRequestBuilder;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -100,22 +106,127 @@ public class ESTest {
           .doc(jsonObject).upsert(indexRequest);
 //      esRepository.getClient().update(updateRequest).get();
 
-
-
-
-
       //重新索引
 //      esRepository.getClient().prepareIndex("test_zhangd", "test_type", "test_id" + i)
 //          .setSource(jsonObject).get();
 
-
       esRepository.getBulkProcessor().add(updateRequest);
 
-
     }
-    long end = System.currentTimeMillis();
+  }
 
-    System.out.println("all time =" + (end - begin) / 1000);
+  @Test
+  public void doTest100() throws Exception {
+
+    String jsonString = "{\"server_time\":1518329853941,\"run_key\":\"04f27530484af27bbcd596020c7df72e\",\"agent_id\":372,\"rule_name\":\"威胁说明\",\"net_type\":\"NETWORK_WIFI\",\"event_def_id\":\"798\",\"dt_server_time\":\"2018-02-11T14:17:33+08:00\",\"dt_time\":\"2018-02-11T14:17:33+08:00\",\"manufacturer\":\"Xiaomi3\",\"safe_event_id\":\"7477-00000000-0000-0000-0000-000000007477_372_1518334287732_433091\",\"os_info\":\"android 6.0.13\",\"self_md5\":\"372000000000000000000000000000000009\",\"app_info\":\"android \",\"client_ip\":\"172.16.12.104\",\"location\":\"unknown\",\"time\":1518329853750,\"udid\":\"7477-00000000-0000-0000-0000-000000007477\",\"msg_id\":5554}";
+    //String jsonString = "{\"server_time\":1518329853941}";
+    JSONObject jsonObject = JSONObject.parseObject(jsonString);
+
+    //更新字段
+    IndexRequest indexRequest = new IndexRequest("index_event_20180211", "bangcle_type",
+        "04f27530484af27bbcd596020c7df72e|372|5554|15708")
+        .source(jsonObject);
+    esRepository.getClient().index(indexRequest).get();
+
+//    esRepository.getBulkProcessor().add(indexRequest);
+
+  }
+
+  @Test
+  public void testSearchMap() throws Exception {
+    GetRequestBuilder getRequestBuilder = esRepository.client
+        .prepareGet("index_dev", "bangcle_type", "3276-00000000-0000-0000-0000-000000003276");
+
+    GetResponse getResponse = getRequestBuilder.get();
+
+    Map<String, Object> hashMap = getResponse.getSourceAsMap();
+    Iterator<String> setKey = hashMap.keySet().iterator();
+
+    long begintime = System.currentTimeMillis();
+    for (int i = 0; i < 10000; i++) {
+      GetRequestBuilder getRequestBuilder2 = esRepository.client
+          .prepareGet("index_dev", "bangcle_type", "3276-00000000-0000-0000-0000-000000003276");
+      GetResponse getResponse2 = getRequestBuilder2.get();
+      Map<String, Object> map2 = getResponse2.getSourceAsMap();
+      while (setKey.hasNext()) {
+        String messageKey = setKey.next();
+        if (map2.containsKey(messageKey)) {
+          if (!map2.get(messageKey).toString().equals(hashMap.get(messageKey).toString())) {
+            break;
+          }
+        } else {
+          break;
+        }
+      }
+    }
+    long endtime = System.currentTimeMillis();
+
+    System.out.println("use time==" + (endtime - begintime));
+  }
+
+  @Test
+  public void testSearchMap2() throws Exception {
+    GetRequestBuilder getRequestBuilder = esRepository.client
+        .prepareGet("index_dev", "bangcle_type", "3276-00000000-0000-0000-0000-000000003276");
+
+    GetResponse getResponse = getRequestBuilder.get();
+
+    Map<String, Object> hashMap = getResponse.getSourceAsMap();
+    Map<String, Object> map2 = new HashMap<String, Object>();
+    map2.putAll(hashMap);
+    Iterator<String> setKey = hashMap.keySet().iterator();
+
+    long begintime = System.currentTimeMillis();
+    for (int i = 0; i < 100000; i++) {
+      while (setKey.hasNext()) {
+        String messageKey = setKey.next();
+        if (map2.containsKey(messageKey)) {
+          if (!map2.get(messageKey).toString().equals(hashMap.get(messageKey).toString())) {
+            System.out.println("跳出1");
+            break;
+          }
+        } else {
+          System.out.println("跳出2");
+          break;
+        }
+      }
+    }
+    long endtime = System.currentTimeMillis();
+
+    System.out.println("use time==" + (endtime - begintime));
+  }
+
+
+  @Test
+  public void testMap() throws Exception {
+    Map<String, String> map1 = new HashMap<String, String>();
+    map1.put("b", "a");
+    map1.put("a", "a");
+
+    Map<String, String> map2 = new HashMap<String, String>();
+    map2.put("a", "a");
+    map2.put("b", "a");
+
+    System.out.println(map1.hashCode());
+    System.out.println(map2.hashCode());
+
+  }
+
+  @Test
+  public void test3() throws Exception {
+    Set<String> list = new HashSet<String>();
+    list.add("111");
+    list.add("333");
+
+    System.out.println(Joiner.on(",").skipNulls().join(list));
+
+    Map<String, Set<String>> map = new HashMap<String, Set<String>>();
+    map.put("aaa", list);
+
+    map.get("aaa").add("222");
+    map.get("aaa").add("222");
+
+    System.out.println(map.get("aaa").size());
 
   }
 }

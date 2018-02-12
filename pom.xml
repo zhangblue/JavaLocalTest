@@ -12,6 +12,7 @@
     <module>GuavaTest</module>
     <module>AlibabaFashJson</module>
     <module>ElasticSearch</module>
+    <module>HbaseTest</module>
   </modules>
 
   <properties>
