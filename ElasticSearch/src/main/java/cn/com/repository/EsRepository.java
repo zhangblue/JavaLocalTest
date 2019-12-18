@@ -11,6 +11,7 @@ import org.elasticsearch.action.bulk.BackoffPolicy;
 import org.elasticsearch.action.bulk.BulkProcessor;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.collect.MapBuilder;
 import org.elasticsearch.common.settings.Settings;
@@ -29,8 +30,8 @@ public class EsRepository {
   public TransportClient client = null;
   public BulkProcessor bulkProcessor = null;
   private String strClusterName = "bangcle_es";
-  public String strType = "type_demo";//写死的值，后续会废弃
-  private String strTransportHostNames = "172.16.31.99";
+  public String strType = "h5_type";//写死的值，后续会废弃
+  private String strTransportHostNames = "172.16.36.181";
   private Splitter splitter = Splitter.on(",").trimResults();
 
   /**
@@ -53,25 +54,7 @@ public class EsRepository {
    * build bulk processor.
    */
   public void buildBulkProcessor() throws Exception {
-    bulkProcessor = BulkProcessor.builder(client, new BulkProcessor.Listener() {
-      public void beforeBulk(long l, BulkRequest bulkRequest) {
 
-      }
-
-      public void afterBulk(long l, BulkRequest bulkRequest, BulkResponse bulkResponse) {
-
-      }
-
-      public void afterBulk(long l, BulkRequest bulkRequest, Throwable throwable) {
-
-      }
-    }).setBulkActions(1000)
-        .setBulkSize(new ByteSizeValue(5, ByteSizeUnit.MB))
-        .setFlushInterval(TimeValue.timeValueSeconds(10))
-        .setConcurrentRequests(3)
-        .setBackoffPolicy(
-            BackoffPolicy.exponentialBackoff(TimeValue.timeValueMillis(100), 3))
-        .build();
   }
 
   /**

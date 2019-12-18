@@ -1,0 +1,119 @@
+{
+  "order": 0,
+  "index_patterns": [
+    "h5_devinfo"
+  ],
+  "settings": {
+    "number_of_replicas": 0,
+    "number_of_shards": 1
+  },
+  "mappings": {
+    "h5_type": {
+      "numeric_detection": false,
+      "properties": {
+        "task_id": {
+          "type": "keyword"
+        },
+        "_time": {
+          "type": "long"
+        },
+        "_rk": {
+          "type": "keyword"
+        },
+        "_serial": {
+          "type": "keyword"
+        },
+        "_v": {
+          "type": "keyword"
+        },
+        "model": {
+          "type": "keyword"
+        },
+        "rp": {
+          "type": "keyword"
+        },
+        "browser_id": {
+          "type": "keyword"
+        },
+        "browser_id_temp": {
+          "type": "keyword"
+        },
+        "wm": {
+          "type": "keyword"
+        },
+        "plt": {
+          "type": "keyword"
+        },
+        "sdk_ver": {
+          "type": "keyword"
+        },
+        "os": {
+          "type": "keyword",
+          "doc_values": false,
+          "index": false
+        },
+        "browser_engine": {
+          "type": "keyword",
+          "doc_values": false,
+          "index": false
+        },
+        "browser_plug": {
+          "type": "keyword"
+        },
+        "accept": {
+          "type": "keyword"
+        },
+        "accept_language": {
+          "type": "keyword"
+        },
+        "accept_encoding": {
+          "type": "keyword"
+        },
+        "accept_charset": {
+          "type": "keyword"
+        },
+        "screen_size": {
+          "type": "long"
+        },
+        "color_depth": {
+          "type": "keyword"
+        },
+        "canvas": {
+          "type": "keyword"
+        },
+        "webgl_vendor": {
+          "type": "keyword",
+          "doc_values": false,
+          "index": false
+        },
+        "cpu_class": {
+          "type": "keyword"
+        },
+        "cpu_core": {
+          "type": "integer"
+        },
+        "browser_platform": {
+          "type": "keyword"
+        },
+        "user_agent": {
+          "type": "text",
+          "doc_values": false,
+          "index": false
+        },
+        "reinforce_tastics": {
+          "type": "keyword"
+        },
+        "ext": {
+          "type": "object"
+        },
+        "dt_msg_time":{
+          "type": "date",
+          "format": "yyyy-MM-dd HH:mm:ss.SSS"
+        },
+        "msg_time":{
+          "type": "long"
+        }
+      }
+    }
+  }
+}

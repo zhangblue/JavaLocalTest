@@ -1,0 +1,73 @@
+{
+  "task_id": "0",
+  "_time": "1566189249837",
+  "_rk": "8ed47185-a586-4735-b03b-0b2e3c810283",
+  "_serial": "1",
+  "_v": "1.0",
+  "model": "MIX 2",
+  "rp": "1080X2161",
+  "browser_id": "c426bfb675d9e7fdd2ab98cbee6d8c90",
+  "browser_id_temp": "c426bfb675d9e7fdd2ab98cbee6d8c90",
+  "wm": "",
+  "plt": "web",
+  "sdk_ver": "1.2",
+  "os": "Linux; Android 9; MIX 2 Build/PKQ1.190118.001; wv",
+  "browser_engine": "AppleWebKit/537.36 ",
+  "browser_plug": [
+    "PDF.PdfCtrl",
+    "Skype.Detection"
+  ],
+  "accept": [
+    "application/pdf",
+    "application/x-pnacl"
+  ],
+  "accept_language": [
+    "zh-CN",
+    "en-US"
+  ],
+  "accept_encoding": "",
+  "accept_charset": "UTF-8",
+  "screen_size": "",
+  "color_depth": "24",
+  "canvas": "708f2eae",
+  "webgl_vendor": "Qualcomm~Adreno (TM) 540",
+  "cpu_class": "",
+  "cpu_core": "8",
+  "browser_platform": "Linux armv8l",
+  "user_agent": "Mozilla/5.0 (Linux; Android 9; MIX 2 Build/PKQ1.190118.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Html5Plus/1.0",
+  "reinforce_tastics": [
+    "compact",
+    "domainLock",
+    "reservedNames",
+    "appBind",
+    "jsObfuscate"
+  ],
+  "ext": {
+  },
+  "ek": "_webaction",
+  "et": "pageshow",
+  "em": "window",
+  "timestamp": "1566190119891",
+  "uid": "",
+  "session_id": "",
+  "pn": "",
+  "net": "wifi",
+  "lbs": {
+    "lat": "39.8736416",
+    "lon": "116.4134289"
+  },
+  "cookie_length": 0,
+  "attribute": {
+    "p": "file:///storage/emulated/0/Android/data/cn.com.yusys.dlrcbmb/apps/dlrcbmb/www/views/main/main.html",
+    "ref": "file:///storage/emulated/0/Android/data/cn.com.yusys.dlrcbmb/apps/dlrcbmb/www/views/main/main.html"
+  },
+  "msg_time":1567079412820,
+  "dt_msg_time": "2019-08-29T19:57:18+0800",
+  "server_time": 1567079412820,
+  "dt_server_time": "2019-08-29T19:57:18+0800",
+  "location": "北京",
+  "city": "北京",
+  "county": "北京",
+  "equipment_type": "windows",
+  "from_source": "mobile"
+}

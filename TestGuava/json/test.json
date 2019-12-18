@@ -1,0 +1,184 @@
+{
+  "task_id": "0",
+  "_time": 1566189249837,
+  "_rk": "8ed47185-a586-4735-b03b-0b2e3c810283",
+  "_serial": "1",
+  "_v": "1.0",
+  "_cp": {
+    "model": "MIX 2",
+    "rp": "1080X2161",
+    "browser_id": "c426bfb675d9e7fdd2ab98cbee6d8c90",
+    "browser_id_temp": "c426bfb675d9e7fdd2ab98cbee6d8c90",
+    "wm": "",
+    "plt": "web",
+    "sdk_ver": "1.2",
+    "os": "Linux; Android 9; MIX 2 Build/PKQ1.190118.001; wv",
+    "browser_engine": " AppleWebKit/537.36 ",
+    "browser_plug": [
+    ],
+    "accept": [
+    ],
+    "accept_language": [
+      "zh-CN",
+      "en-US"
+    ],
+    "accept_encoding": "",
+    "accept_charset": "UTF-8",
+    "screen_size": "",
+    "color_depth": "24",
+    "canvas": "708f2eae",
+    "webgl_vendor": "Qualcomm~Adreno (TM) 540",
+    "cpu_class": "",
+    "cpu_core": "8",
+    "browser_platform": "Linux armv8l",
+    "user_agent": "Mozilla/5.0 (Linux; Android 9; MIX 2 Build/PKQ1.190118.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Html5Plus/1.0",
+    "reinforce_tastics": [
+      "compact",
+      "domainLock",
+      "reservedNames",
+      "appBind",
+      "jsObfuscate"
+    ],
+    "ext": {
+    }
+  },
+  "_ep": [
+    {
+      "ek": "_webaction",
+      "et": "error",
+      "em": "window",
+      "timestamp": "1566190119881",
+      "uid": "",
+      "session_id": "",
+      "pn": "",
+      "net": "wifi",
+      "lbs": {
+        "lat": "unknown",
+        "lon": "unknown"
+      },
+      "cookie_length": 0,
+      "attribute": {
+        "p": "file:///storage/emulated/0/Android/data/cn.com.yusys.dlrcbmb/apps/dlrcbmb/www/views/main/main.html",
+        "e_type": "appBindError",
+        "e_info": "AppBindForbidden:androidBindError"
+      }
+    },
+    {
+      "ek": "_webaction",
+      "et": "error",
+      "em": "window",
+      "timestamp": "1565947552732",
+      "uid": "",
+      "session_id": "",
+      "pn": "",
+      "net": "wifi",
+      "lbs": {
+        "lat": "unknown",
+        "lon": "unknown"
+      },
+      "cookie_length": 0,
+      "attribute": {
+        "p": "http://www.8812aaa.com:8341/",
+        "e_type": "domainError",
+        "e_info": "domainLockError"
+      }
+    },
+    {
+      "ek": "_webaction",
+      "et": "error",
+      "em": "window",
+      "timestamp": "1566286750554",
+      "uid": "",
+      "session_id": "",
+      "pn": "",
+      "net": "3g",
+      "cookie_length": 0,
+      "attribute": {
+        "p": "file:///C:/Users/guowe/Desktop/test_inject_20190820152545_sec/index.html",
+        "e_type": "formatError",
+        "e_info": "Maximum call stack size exceeded"
+      }
+    },
+    {
+      "ek": "_webaction",
+      "et": "pageshow",
+      "em": "window",
+      "timestamp": "1566190119891",
+      "uid": "",
+      "session_id": "",
+      "pn": "",
+      "net": "wifi",
+      "lbs": {
+        "lat": "unknown",
+        "lon": "unknown"
+      },
+      "cookie_length": 0,
+      "attribute": {
+        "p": "file:///storage/emulated/0/Android/data/cn.com.yusys.dlrcbmb/apps/dlrcbmb/www/views/main/main.html",
+        "ref": "file:///storage/emulated/0/Android/data/cn.com.yusys.dlrcbmb/apps/dlrcbmb/www/views/main/main.html"
+      }
+    },
+    {
+      "ek": "_webaction",
+      "et": "click",
+      "em": "dom",
+      "timestamp": "1565918973197",
+      "uid": "",
+      "session_id": "",
+      "pn": "",
+      "net": "4g",
+      "lbs": {
+        "lat": "unknown",
+        "lon": "unknown"
+      },
+      "cookie_length": 0,
+      "attribute": {
+        "p": "http://www.8812aaa.com:8341/",
+        "loc": "",
+        "desc": "HTML",
+        "x": 759,
+        "y": 218
+      }
+    },
+    {
+      "ek": "_webaction",
+      "et": "touchstart",
+      "em": "dom",
+      "timestamp": "1566189249592",
+      "uid": "",
+      "session_id": "",
+      "pn": "",
+      "net": "wifi",
+      "lbs": {
+        "lat": "unknown",
+        "lon": "unknown"
+      },
+      "cookie_length": 0,
+      "attribute": {
+        "p": "file:///storage/emulated/0/Android/data/cn.com.yusys.dlrcbmb/apps/dlrcbmb/www/views/main/main.html",
+        "x": 115.2727279663086,
+        "y": 501.8182373046875
+      }
+    },
+    {
+      "ek": "_webaction",
+      "et": "touchend",
+      "em": "dom",
+      "timestamp": "1566189249671",
+      "uid": "",
+      "session_id": "",
+      "pn": "",
+      "net": "wifi",
+      "lbs": {
+        "lat": "unknown",
+        "lon": "unknown"
+      },
+      "cookie_length": 0,
+      "attribute": {
+        "p": "file:///storage/emulated/0/Android/data/cn.com.yusys.dlrcbmb/apps/dlrcbmb/www/views/main/main.html",
+        "x": 115.2727279663086,
+        "y": 501.8182373046875
+      }
+    }
+  ]
+}
