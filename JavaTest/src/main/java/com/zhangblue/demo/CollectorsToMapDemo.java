@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class CollectorsToMapDemo {
 
   public static void main(String[] args) {
-    new CollectorsToMapDemo().demo();
+    new CollectorsToMapDemo().demo2();
   }
 
 
@@ -29,6 +29,22 @@ public class CollectorsToMapDemo {
             .toMap(Book::getReleaseYear, Function.identity(), (oldKey, newKey) -> oldKey));
 
     collect.forEach((k, v) -> System.out.println(k + "_" + v.toString()));
+  }
+
+
+  public void demo2() {
+    List<Book> bookList = new ArrayList<>();
+    bookList.add(new Book("The Fellowship of the Ring", 1954, "0395489318"));
+    bookList.add(new Book("The Two Towers", 1954, "0345339711"));
+    bookList.add(new Book("The Return of the King", 1955, "0618129111"));
+
+    Map<String, String> collect = bookList.stream()
+        .collect(Collectors
+            .toMap(book -> book.getReleaseYear() + "_" + book.getIsbn(), book -> book.getName(),
+                (oldKey, newKey) -> oldKey));
+
+    collect.forEach((k, v) -> System.out.println(k + "=========" + v.toString()));
+
   }
 
   class Book {
