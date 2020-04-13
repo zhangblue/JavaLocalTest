@@ -30,8 +30,8 @@ public class EsRepository {
   public TransportClient client = null;
   public BulkProcessor bulkProcessor = null;
   private String strClusterName = "bangcle_es";
-  public String strType = "h5_type";//写死的值，后续会废弃
-  private String strTransportHostNames = "172.16.36.181";
+  public String strType = "bangcle_type";//写死的值，后续会废弃
+  private String strTransportHostNames = "172.16.36.123";
   private Splitter splitter = Splitter.on(",").trimResults();
 
   /**

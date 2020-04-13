@@ -1,6 +1,7 @@
 package di.zhang.redis;
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Tuple;
 
@@ -30,6 +31,7 @@ public class SortedSet {
 
   public void rangeData(Jedis redisConn) {
     Set<Tuple> tuples = redisConn.zrangeByScoreWithScores("di.zhang", 1576570464, 1576570464 + 120);
+
 
     for (Tuple tuple : tuples) {
       System.out.println( new Double(tuple.getScore()).longValue() +"----"+tuple.getElement());

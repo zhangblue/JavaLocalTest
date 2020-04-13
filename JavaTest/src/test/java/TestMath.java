@@ -1,3 +1,5 @@
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import org.junit.Test;
 
 import java.util.*;
@@ -52,12 +56,43 @@ public class TestMath {
         FileChannel fileChannel_to = (FileChannel.open(copy_to,
             EnumSet.of(StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE)))) {
 
-
-
       fileChannel_from.transferTo(0L, fileChannel_from.size(), fileChannel_to);
     } catch (IOException ex) {
       System.err.println(ex);
     }
   }
+
+  @Test
+  public void testccc() {
+    String cc = "[\"00\"]";
+
+    Map<String, Object> tmp = new HashMap<>();
+    tmp.put("a", cc);
+    System.out.println(tmp.get("a").toString());
+
+    System.out.println(JSONArray.parseArray(tmp.get("a").toString()).toJSONString());
+
+
+  }
+
+
+
+
+
+  @Test
+  public void testooo(){
+    List<String> listArray = new ArrayList<>();
+    listArray.add("a");
+    listArray.add("b");
+
+    String[] result = new String[listArray.size()];
+
+    listArray.toArray(result);
+
+    for (String s : result) {
+      System.out.println(s);
+    }
+  }
+
 }
 

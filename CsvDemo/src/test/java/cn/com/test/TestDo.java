@@ -1,7 +1,5 @@
 package cn.com.test;
 
-import org.junit.Test;
-
 /**
  * @ClassName TestDo
  * @Description TODO
@@ -10,7 +8,6 @@ import org.junit.Test;
  **/
 public class TestDo {
 
-  @Test
   public void dorun1(){
     String[] str = new String[3];
 

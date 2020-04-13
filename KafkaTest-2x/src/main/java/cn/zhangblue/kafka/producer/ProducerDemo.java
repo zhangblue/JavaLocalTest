@@ -24,6 +24,7 @@ public class ProducerDemo {
         StringSerializer.class.getName());
 
     Producer<String, String> producer = new KafkaProducer<String, String>(properties);
+
     for (int i = 0; i < 100; i++) {
       producer.send(
           new ProducerRecord<String, String>("my-topic", "key" + i, "value" + i),

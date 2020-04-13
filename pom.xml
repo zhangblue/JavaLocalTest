@@ -20,6 +20,7 @@
     <module>JavaTest</module>
     <module>KafkaTest-2x</module>
     <module>RedisDemo</module>
+    <module>HtmlToPdf</module>
   </modules>
 
   <parent>

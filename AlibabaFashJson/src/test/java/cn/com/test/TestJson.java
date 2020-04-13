@@ -92,4 +92,11 @@ public class TestJson {
     System.out.println("r8".hashCode() % 8);
   }
 
+  @Test
+  public void testboolean(){
+    String json = "{\"name\":\"aaa\"}";
+    JSONObject jsonObject = JSONObject.parseObject(json);
+    System.out.println(jsonObject.getBoolean("c"));
+  }
+
 }

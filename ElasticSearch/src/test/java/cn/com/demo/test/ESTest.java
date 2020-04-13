@@ -14,6 +14,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import org.apache.lucene.search.BooleanQuery;
 import org.elasticsearch.action.ActionFuture;
 import org.elasticsearch.action.admin.indices.stats.IndexStats;
 import org.elasticsearch.action.admin.indices.stats.IndicesStatsRequest;
@@ -26,8 +27,12 @@ import org.elasticsearch.action.get.MultiGetItemResponse;
 import org.elasticsearch.action.get.MultiGetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.ExistsQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.index.query.TermsQueryBuilder;
@@ -35,6 +40,7 @@ import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.UpdateByQueryAction;
 import org.elasticsearch.index.reindex.UpdateByQueryRequestBuilder;
 import org.elasticsearch.script.Script;
+import org.elasticsearch.search.SearchHit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -172,7 +178,8 @@ public class ESTest {
         "  \"cpu_class\": \"\",\n" +
         "  \"cpu_core\": \"8\",\n" +
         "  \"browser_platform\": \"Linux armv8l\",\n" +
-        "  \"user_agent\": \"Mozilla/5.0 (Linux; Android 9; MIX 2 Build/PKQ1.190118.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Html5Plus/1.0\",\n" +
+        "  \"user_agent\": \"Mozilla/5.0 (Linux; Android 9; MIX 2 Build/PKQ1.190118.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Html5Plus/1.0\",\n"
+        +
         "  \"reinforce_tastics\": [\n" +
         "    \"compact\",\n" +
         "    \"domainLock\",\n" +
@@ -334,7 +341,8 @@ public class ESTest {
     in.close();
     String content = new String(filecontent, "UTF-8");
 
-    JSONObject json = new JSONObject().fluentPut("data_name", "zhangsan").fluentPut("data_content", content);
+    JSONObject json = new JSONObject().fluentPut("data_name", "zhangsan")
+        .fluentPut("data_content", content);
 
     //更新字段
     IndexRequest indexRequest = new IndexRequest("zhangd_test", "doc", "1")
@@ -350,7 +358,8 @@ public class ESTest {
   @Test
   public void searchData() throws Exception {
 
-    File file = new File("/Users/zhangdi/work/workspace/github/JavaLocalTest/TestGuava/json/h5_devinfo_template.json");
+    File file = new File(
+        "/Users/zhangdi/work/workspace/github/JavaLocalTest/TestGuava/json/h5_devinfo_template.json");
     Long filelength = file.length();
     byte[] filecontent = new byte[filelength.intValue()];
     FileInputStream in = new FileInputStream(file);
@@ -360,7 +369,8 @@ public class ESTest {
     String content = new String(filecontent, "UTF-8");
 
     Map<String, Object> mapSource = JSONObject.parseObject(content).toJavaObject(Map.class);
-    PutIndexTemplateResponse ttttttt = esRepository.getClient().admin().indices().preparePutTemplate("aaaaaaa").setSource(mapSource).get();
+    PutIndexTemplateResponse ttttttt = esRepository.getClient().admin().indices()
+        .preparePutTemplate("aaaaaaa").setSource(mapSource).get();
   }
 
 
@@ -383,7 +393,7 @@ public class ESTest {
   }
 
   @Test
-  public void test003(){
+  public void test003() {
     SimpleDateFormat myFormat = new SimpleDateFormat("yyyyMMdd");
     System.out.println(myFormat.format(new Date()));
   }
@@ -393,8 +403,11 @@ public class ESTest {
 
     long begin = System.currentTimeMillis();
     Script script = new Script("ctx._source.agent_id = 1");
-    UpdateByQueryRequestBuilder updateByQueryRequestBuilder = UpdateByQueryAction.INSTANCE.newRequestBuilder(esRepository.getClient());
-    BulkByScrollResponse bulkByScrollResponse = updateByQueryRequestBuilder.source("h5_message_20190916").script(script).filter(QueryBuilders.termQuery("agent_id", 2)).abortOnVersionConflict(false).get();
+    UpdateByQueryRequestBuilder updateByQueryRequestBuilder = UpdateByQueryAction.INSTANCE
+        .newRequestBuilder(esRepository.getClient());
+    BulkByScrollResponse bulkByScrollResponse = updateByQueryRequestBuilder
+        .source("h5_message_20190916").script(script).filter(QueryBuilders.termQuery("agent_id", 2))
+        .abortOnVersionConflict(false).get();
     List<BulkItemResponse.Failure> bulkFailures = bulkByScrollResponse.getBulkFailures();
 
     for (BulkItemResponse.Failure bulkFailure : bulkFailures) {
@@ -402,10 +415,36 @@ public class ESTest {
     }
 
     long end = System.currentTimeMillis();
-    System.out.println((end-begin)/1000);
+    System.out.println((end - begin) / 1000);
 
 
   }
 
+  @Test
+  public void testSearchExists() {
+    TransportClient client = esRepository.getClient();
 
+    BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+    boolQueryBuilder.must(QueryBuilders.termQuery("name", "zhangsan"));
+    boolQueryBuilder.must(QueryBuilders.termQuery("age", 20));
+
+    //查询class字段必须为a
+    BoolQueryBuilder boolQueryBuilderClass1 = QueryBuilders.boolQuery();
+    boolQueryBuilderClass1.must(QueryBuilders.termQuery("class", "a"));
+    boolQueryBuilder.should(boolQueryBuilderClass1);
+
+    //查询class字段不存在
+    BoolQueryBuilder boolQueryBuilderClass2 = QueryBuilders.boolQuery();
+    boolQueryBuilderClass2.mustNot(QueryBuilders.existsQuery("class"));
+    boolQueryBuilder.should(boolQueryBuilderClass2);
+
+    SearchResponse searchResponse = client.prepareSearch("bangcle_test")
+        .setQuery(boolQueryBuilder).get();
+
+    SearchHit[] hits = searchResponse.getHits().getHits();
+    for (SearchHit hit : hits) {
+      System.out.println(hit.getId());
+    }
+
+  }
 }

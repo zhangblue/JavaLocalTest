@@ -21,7 +21,6 @@ public class KafkaConsumerService {
     props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 1);
     props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
     props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-    props.put(ConsumerConfig.HEARTBEAT_INTERVAL_MS_CONFIG)
     return props;
   }
 

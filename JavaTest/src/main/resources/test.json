@@ -1,0 +1,64 @@
+[
+  {
+    "rule": {
+      "threat": {
+        "threat_count_type": "e_location",
+        "threat_count": 10,
+        "threat_type": 3,
+        "threat_list": [
+          "e_location",
+          "e_inject"
+        ],
+        "hit_type": 0
+      },
+      "risk": {
+        "risk_count_type": "risk_app",
+        "risk_count": 10,
+        "risk_type": 3,
+        "risk_list": [
+          "risk_app",
+          "risk_frame"
+        ],
+        "hit_type": 0
+      },
+      "wifi": {
+        "wifi_ssid": "bangcle",
+        "wifi_mac": "00:00:00:00",
+        "hit_type": 0
+      },
+      "ip": {
+        "ip_list": [
+          "1.1.1.2",
+          "1.1.1.1"
+        ],
+        "hit_type": 0
+      },
+      "account": {
+        "account_list": [
+          "zhangsan",
+          "lisi"
+        ],
+        "no_account": true
+      },
+      "app": {
+        "less_than": 10,
+        "more_than": 10,
+        "app_names": [
+          "appname1",
+          "appname1"
+        ],
+        "app_cert": [
+          "cert1",
+          "cert2"
+        ],
+        "hit_type": 0
+      }
+    }
+  },
+  {
+    "rule": {
+      "threat": {},
+      "env": {}
+    }
+  }
+]

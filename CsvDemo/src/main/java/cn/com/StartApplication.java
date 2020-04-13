@@ -2,8 +2,24 @@ package cn.com;
 
 import cn.com.model.PersonModel;
 import cn.com.service.CSVOperating;
+import com.opencsv.CSVReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @ClassName StartApplication
@@ -15,44 +31,38 @@ public class StartApplication {
 
 
   public static void main(String[] args) {
-    writeWithLines();
-  }
+    try {
 
+      Path path = Paths.get("/Users/zhangdi/Downloads/用户文件(2017-05-08)");
+      File[] list = path.toFile().listFiles();
 
-  public static void writeWithLines() {
-    List<String[]> listData = new ArrayList<>(100);
-    CSVOperating<PersonModel> csvOperating = new CSVOperating<PersonModel>();
-    for (int i = 0; i < 20; i++) {
-      if (i % 3 == 0) {
-        String[] strLine = new String[]{"=\"10000000000000000\"", null, "男", null, null};
-        listData.add(strLine);
-      } else {
-        String[] strLine = new String[]{"张" + i, "年龄" + i, "春春", "phone" + i, "地址" + i};
-        listData.add(strLine);
+      StartApplication startApplication = new StartApplication();
+      for (File one : list) {
+        startApplication.readCsv(Paths.get(one.getPath()));
+        System.out.println("finish = [" + one + "]");
       }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-    String s = csvOperating.writeCSVFile(listData, "/Users/zhangdi/Downloads/", new String[]{"姓名", "年龄", "性别", "手机号", "地址"}, false);
-    System.out.println(s);
   }
 
 
-  public static void writeWithBean() {
-    List<PersonModel> listData = new ArrayList<>(100);
+  public void readCsv(Path file) throws IOException {
+    Path fileName = file.getFileName();
+    Path destFile = Paths.get("/Users/zhangdi/Documents/工作/梆梆/iptv/地理位置映射表/入库程序/")
+        .resolve("test-" + fileName);
 
-    for (int i = 0; i < 10; i++) {
+    CSVReader reader = new CSVReader(
+        new InputStreamReader(new FileInputStream(file.toFile()), "GBK"));
 
-      if (i % 2 == 0) {
-        PersonModel personModel = new PersonModel(null, null, null, "phone=" + i, null);
-        listData.add(personModel);
-      } else {
-        PersonModel personModel = new PersonModel("/user//zhangblue=" + i, i + "", 1 + "", "phone=" + i, "addres=" + i);
-        listData.add(personModel);
-      }
-    }
+    reader.readNext();
+    List<String[]> strings = reader.readAll();
 
-    CSVOperating<PersonModel> csvOperating = new CSVOperating<PersonModel>();
-    csvOperating.writeCSVFile(listData, PersonModel.class, "/Users/zhangdi/Downloads/test.csv", new String[]{"name", "age", "sex", "phone", "address"},
-        new String[]{"姓名", "年龄", "性别", "手机号", "地址"}, false);
+    List<String> collect = strings.stream().map(x -> x[0] + "," + x[4] + "," + x[5])
+        .collect(Collectors.toList());
+
+    Files.write(destFile, collect, StandardCharsets.UTF_8, StandardOpenOption.CREATE);
   }
+
 
 }
