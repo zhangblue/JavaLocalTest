@@ -2,6 +2,8 @@ package cn.com.test;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.zhangblue.model.User;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -93,10 +95,23 @@ public class TestJson {
   }
 
   @Test
-  public void testboolean(){
+  public void testboolean() {
     String json = "{\"name\":\"aaa\"}";
     JSONObject jsonObject = JSONObject.parseObject(json);
     System.out.println(jsonObject.getBoolean("c"));
+  }
+
+  @Test
+  public void testJsonToClass() {
+    String json = "{\"name\":null}";
+    User user = JSONObject.parseObject(json, User.class);
+    System.out.println(user.getName());
+
+    System.out
+        .println(JSONObject.toJSONString(user, SerializerFeature.DisableCircularReferenceDetect,
+            SerializerFeature.WriteNullNumberAsZero, SerializerFeature.WriteMapNullValue,
+            SerializerFeature.WriteNullListAsEmpty,
+            SerializerFeature.WriteNullStringAsEmpty));
   }
 
 }

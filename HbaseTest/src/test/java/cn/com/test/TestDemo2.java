@@ -2,7 +2,11 @@ package cn.com.test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericData.Array;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.Cell;
@@ -13,8 +17,13 @@ import org.apache.hadoop.hbase.client.Admin;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.Get;
+import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
+import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.Table;
+import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
+import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.After;
 import org.junit.Before;
@@ -145,21 +154,67 @@ public class TestDemo2 {
     try {
       Table table = connection.getTable(TableName.valueOf("t_test_log"));
       Get get = new Get(Bytes.toBytes("abc"))
-          .addColumn(Bytes.toBytes("cf3"), Bytes.toBytes("name")).addColumn(Bytes.toBytes("cf3"), Bytes.toBytes("age1"));
+          .addColumn(Bytes.toBytes("cf3"), Bytes.toBytes("name"))
+          .addColumn(Bytes.toBytes("cf3"), Bytes.toBytes("age1"));
       Result result = table.get(get);
 
-      if(!result.isEmpty()){
+      if (!result.isEmpty()) {
         byte[] name = result.getValue(Bytes.toBytes("cf3"), Bytes.toBytes("name"));
         byte[] age = result.getValue(Bytes.toBytes("cf3"), Bytes.toBytes("age1"));
 
-        System.out.println(null==name);
-        System.out.println(null==age);
-
+        System.out.println(null == name);
+        System.out.println(null == age);
       }
-
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
+
+  @Test
+  public void testPutData() {
+    List<Put> listPut = new ArrayList<>();
+    for (int i = 0; i < 100; i++) {
+      String rowkey = "aaa_" + (999 - i);
+      Put put = new Put(Bytes.toBytes(rowkey))
+          .addColumn(Bytes.toBytes("cf3"), Bytes.toBytes("name"), Bytes.toBytes("zhang" + i))
+          .addColumn(Bytes.toBytes("cf3"), Bytes.toBytes("age"), Bytes.toBytes(i));
+      listPut.add(put);
+    }
+
+    try {
+      Table t_test_log = connection.getTable(TableName.valueOf("t_test_log"));
+      t_test_log.put(listPut);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Test
+  public void testFilter() {
+    int i = 30;
+
+    SingleColumnValueFilter singleColumnValueFilter = new SingleColumnValueFilter(
+        Bytes.toBytes("cf3"),
+        Bytes.toBytes("age"),
+        CompareOp.LESS_OR_EQUAL, Bytes.toBytes(20));
+
+    Scan scan = new Scan(Bytes.toBytes("aaa_" + (999 - i)), Bytes.toBytes("aaa_" + (999 - 0)));
+    scan.setFilter(singleColumnValueFilter);
+    try {
+      Table t_test_log = connection.getTable(TableName.valueOf("t_test_log"));
+      ResultScanner scanner = t_test_log.getScanner(scan);
+      Iterator<Result> iterator = scanner.iterator();
+      while (iterator.hasNext()) {
+        Result next = iterator.next();
+        System.out.println(Bytes.toString(next.getRow()) + "---" + Bytes
+            .toString(next.getValue(Bytes.toBytes("cf3"),
+                Bytes.toBytes("name"))));
+      }
+
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }
