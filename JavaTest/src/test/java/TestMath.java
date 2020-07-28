@@ -1,23 +1,18 @@
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import org.junit.Test;
-
-import java.util.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.junit.Test;
 
 public class TestMath {
 
@@ -76,11 +71,8 @@ public class TestMath {
   }
 
 
-
-
-
   @Test
-  public void testooo(){
+  public void testooo() {
     List<String> listArray = new ArrayList<>();
     listArray.add("a");
     listArray.add("b");
@@ -93,6 +85,21 @@ public class TestMath {
       System.out.println(s);
     }
   }
+
+  @Test
+  public void testDateFormat() {
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+    String formatColumn = simpleDateFormat.format(System.currentTimeMillis());
+    System.out.println(formatColumn);
+  }
+
+  @Test
+  public void test001() {
+    AtomicInteger i = new AtomicInteger();
+    i.incrementAndGet();//递增后返回递增后的结果
+    i.getAndIncrement();//先获取结果再递增
+  }
+
 
 }
 

@@ -1,16 +1,16 @@
 package cn.com.test;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.avro.generic.GenericData;
-import org.apache.avro.generic.GenericData.Array;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Admin;
@@ -216,5 +216,29 @@ public class TestDemo2 {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  @Test
+  public void testFamilyName() throws IOException {
+    Admin hbaseAdmin = connection.getAdmin();
+
+    TableName tableName = TableName.valueOf("t_test_log");
+    HTableDescriptor tableDescriptor = hbaseAdmin
+        .getTableDescriptor(tableName);
+
+    Set<String> familyNames = tableDescriptor.getFamiliesKeys().stream().map(x -> Bytes.toString(x))
+        .collect(Collectors.toSet());
+
+    System.out.println(familyNames);
+    if (!familyNames.contains("cf1")) {
+      hbaseAdmin.disableTable(tableName);
+      tableDescriptor.addFamily(new HColumnDescriptor("cf1").setTimeToLive(60 * 5));
+      hbaseAdmin.modifyTable(tableName, tableDescriptor);
+      hbaseAdmin.enableTable(tableName);
+    } else {
+      System.out.println("exists");
+    }
+
+
   }
 }

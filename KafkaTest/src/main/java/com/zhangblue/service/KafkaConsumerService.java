@@ -1,7 +1,6 @@
 package com.zhangblue.service;
 
 import java.util.Properties;
-import javax.security.auth.login.Configuration;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
@@ -21,7 +20,13 @@ public class KafkaConsumerService {
     props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, 1);
     props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
     props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+    props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,"earliest");
     return props;
   }
+
+
+
+
+
 
 }

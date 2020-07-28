@@ -15,6 +15,15 @@ public class User {
   @JSONField(name = "classes", deserializeUsing = StringDefaultValueDeserializer.class)
   private String classes;
 
+  @JSONField(name = "curriculum")
+  private Curriculum curriculum;
+
+  public User(String name, long agent, String classes, Curriculum curriculum) {
+    this.name = name;
+    this.agent = agent;
+    this.classes = classes;
+    this.curriculum = curriculum;
+  }
 
   public String getName() {
     return name;
@@ -38,5 +47,13 @@ public class User {
 
   public void setClasses(String classes) {
     this.classes = classes;
+  }
+
+  public Curriculum getCurriculum() {
+    return curriculum;
+  }
+
+  public void setCurriculum(Curriculum curriculum) {
+    this.curriculum = curriculum;
   }
 }

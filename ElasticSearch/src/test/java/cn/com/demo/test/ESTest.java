@@ -4,7 +4,6 @@ package cn.com.demo.test;
 import cn.com.repository.EsRepository;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Joiner;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
@@ -12,27 +11,24 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
-
-import org.apache.lucene.search.BooleanQuery;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.elasticsearch.action.ActionFuture;
-import org.elasticsearch.action.admin.indices.stats.IndexStats;
-import org.elasticsearch.action.admin.indices.stats.IndicesStatsRequest;
-import org.elasticsearch.action.admin.indices.stats.IndicesStatsResponse;
 import org.elasticsearch.action.admin.indices.template.put.PutIndexTemplateResponse;
 import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.get.GetRequestBuilder;
 import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.get.MultiGetItemResponse;
-import org.elasticsearch.action.get.MultiGetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.ExistsQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.index.query.TermsQueryBuilder;
@@ -207,7 +203,7 @@ public class ESTest {
 
   @Test
   public void testSearchMap() throws Exception {
-    GetRequestBuilder getRequestBuilder = esRepository.client
+    GetRequestBuilder getRequestBuilder = esRepository.getClient()
         .prepareGet("index_dev", "bangcle_type", "3276-00000000-0000-0000-0000-000000003276");
 
     GetResponse getResponse = getRequestBuilder.get();
@@ -217,7 +213,7 @@ public class ESTest {
 
     long begintime = System.currentTimeMillis();
     for (int i = 0; i < 10000; i++) {
-      GetRequestBuilder getRequestBuilder2 = esRepository.client
+      GetRequestBuilder getRequestBuilder2 = esRepository.getClient()
           .prepareGet("index_dev", "bangcle_type", "3276-00000000-0000-0000-0000-000000003276");
       GetResponse getResponse2 = getRequestBuilder2.get();
       Map<String, Object> map2 = getResponse2.getSourceAsMap();
@@ -239,7 +235,7 @@ public class ESTest {
 
   @Test
   public void testSearchMap2() throws Exception {
-    GetRequestBuilder getRequestBuilder = esRepository.client
+    GetRequestBuilder getRequestBuilder = esRepository.getClient()
         .prepareGet("index_dev", "bangcle_type", "3276-00000000-0000-0000-0000-000000003276");
 
     GetResponse getResponse = getRequestBuilder.get();
@@ -305,7 +301,7 @@ public class ESTest {
 
   @Test
   public void testSearchMap4() throws Exception {
-    GetRequestBuilder getRequestBuilder = esRepository.client
+    GetRequestBuilder getRequestBuilder = esRepository.getClient()
         .prepareGet("index_dev", "bangcle_type", "1838-00000000-0000-0000-0000-000000001838|1");
 
     GetResponse getResponse = getRequestBuilder.get();

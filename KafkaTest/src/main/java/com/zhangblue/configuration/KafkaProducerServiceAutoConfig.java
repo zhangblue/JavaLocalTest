@@ -19,4 +19,7 @@ public class KafkaProducerServiceAutoConfig {
     return new KafkaProducerService(kafkaProperty);
   }
 
+
+
+
 }

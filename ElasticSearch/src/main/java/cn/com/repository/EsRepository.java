@@ -7,18 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
-import org.elasticsearch.action.bulk.BackoffPolicy;
 import org.elasticsearch.action.bulk.BulkProcessor;
-import org.elasticsearch.action.bulk.BulkRequest;
-import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.collect.MapBuilder;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
-import org.elasticsearch.common.unit.ByteSizeUnit;
-import org.elasticsearch.common.unit.ByteSizeValue;
-import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
@@ -27,10 +20,10 @@ import org.elasticsearch.transport.client.PreBuiltTransportClient;
  */
 public class EsRepository {
 
-  public TransportClient client = null;
-  public BulkProcessor bulkProcessor = null;
+  private TransportClient client = null;
+  private BulkProcessor bulkProcessor = null;
   private String strClusterName = "bangcle_es";
-  public String strType = "bangcle_type";//写死的值，后续会废弃
+  private String strType = "bangcle_type";//写死的值，后续会废弃
   private String strTransportHostNames = "172.16.36.123";
   private Splitter splitter = Splitter.on(",").trimResults();
 

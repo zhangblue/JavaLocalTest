@@ -1,0 +1,28 @@
+{
+  "code": "200",
+  "data": {
+    "id(数据库id)": "1",
+    "security_event_ids(安全事件id列表)": [
+      "a",
+      "b",
+      "c"
+    ],
+    "push_cycle(推送周期，0为星期日,1是星期一，以此类推)": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "push_time_range(推送时间段)": {
+      "start": "1:00",
+      "end": "3:00"
+    },
+    "push_upper_limit(推送上限)": {
+      "type": "by_day(按小时)/by_hour(按天)",
+      "count": 10
+    },
+    "push_report(是否推送事件报告。0不推送，1推送)": 0,
+    "data_type(数据类型 event:事件分析 ban:业务封禁系统)": "event"
+  }
+}

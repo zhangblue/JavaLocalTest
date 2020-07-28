@@ -1,11 +1,8 @@
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import org.junit.Test;
 
@@ -63,5 +60,15 @@ public class TestJson {
 
     System.out.println(JSONArray.toJSONString(link));
 
+  }
+
+  @Test
+  public void testJSONArray(){
+    String json = "[\"a\",\"b\"]";
+
+    List<String> strings = JSONArray.parseArray(json, String.class);
+    strings.add("e");
+
+    System.out.println(JSONArray.toJSONString(strings));
   }
 }

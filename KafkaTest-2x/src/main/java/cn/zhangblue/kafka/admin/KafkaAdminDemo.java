@@ -17,33 +17,33 @@ import org.apache.kafka.common.requests.DescribeLogDirsResponse.LogDirInfo;
  */
 public class KafkaAdminDemo {
 
-//  public static void main(String[] args) {
-//    Properties properties = new Properties();
-//    properties.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, "office_elastic:9092");
-//    properties.put(AdminClientConfig.REQUEST_TIMEOUT_MS_CONFIG, 600000);
-//
-//    try (AdminClient client = AdminClient.create(properties)) {
-//      DescribeLogDirsResult describeLogDirsResult = client
-//          .describeLogDirs(Collections.singleton(0));
-//      long size = 0L;
-//      Collection<Map<String, LogDirInfo>> values = describeLogDirsResult.all().get().values();
-//
-//      for (Map<String, LogDirInfo> logDirInfoMap : values) {
-//        //得到数据存放的目录:/home/elasticsearch/works/kafka_2.11-2.3.1/kafka_data
-//        System.out.println(logDirInfoMap.keySet());
-//        //计算总使用量
-//        size += logDirInfoMap.values().stream().map(logDirInfo -> logDirInfo.replicaInfos).flatMap(
-//            topicPartitionReplicaInfoMap -> topicPartitionReplicaInfoMap.values().stream()
-//                .map(replicaInfo -> replicaInfo.size)).mapToLong(Long::longValue).sum();
-//      }
-//
-//      System.out.println(size / 1024 / 1024 + "MB");
-//    } catch (InterruptedException e) {
-//      e.printStackTrace();
-//    } catch (ExecutionException e) {
-//      e.printStackTrace();
-//    }
-//  }
+  public static void main(String[] args) {
+    Properties properties = new Properties();
+    properties.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, "office_elastic:9092");
+    properties.put(AdminClientConfig.REQUEST_TIMEOUT_MS_CONFIG, 600000);
+
+    try (AdminClient client = AdminClient.create(properties)) {
+      DescribeLogDirsResult describeLogDirsResult = client
+          .describeLogDirs(Collections.singleton(0));
+      long size = 0L;
+      Collection<Map<String, LogDirInfo>> values = describeLogDirsResult.all().get().values();
+
+      for (Map<String, LogDirInfo> logDirInfoMap : values) {
+        //得到数据存放的目录:/home/elasticsearch/works/kafka_2.11-2.3.1/kafka_data
+        System.out.println(logDirInfoMap.keySet());
+        //计算总使用量
+        size += logDirInfoMap.values().stream().map(logDirInfo -> logDirInfo.replicaInfos).flatMap(
+            topicPartitionReplicaInfoMap -> topicPartitionReplicaInfoMap.values().stream()
+                .map(replicaInfo -> replicaInfo.size)).mapToLong(Long::longValue).sum();
+      }
+
+      System.out.println(size / 1024 / 1024 + "MB");
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+    }
+  }
 
   public static void main(String[] args) {
     Set<String> set1 = new HashSet<>();

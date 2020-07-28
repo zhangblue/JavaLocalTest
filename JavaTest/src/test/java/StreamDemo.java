@@ -1,10 +1,7 @@
-import com.github.houbb.junitperf.core.annotation.JunitPerfConfig;
 import com.zhangblue.stream.Employee;
 import java.io.IOException;
-import java.nio.channels.SelectableChannel;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -131,6 +128,10 @@ public class StreamDemo {
   public void noneMatchDemo() {
     //所有元素都不满足，返回true
     boolean b = employeeList.stream().noneMatch(Employee.ageLessThan30);
+  }
+
+  @Test
+  public void testface(){
   }
 
 

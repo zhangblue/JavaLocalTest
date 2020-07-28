@@ -1,22 +1,24 @@
 package com.zhangblue;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.zhangblue.model.User;
+import com.zhangblue.ban.ClosureStrategyModel;
 
 public class DoMain {
 
   public static void main(String[] args) {
-    String json = "{\"age\":10}";
 
-    User user = JSONObject.parseObject(json, User.class);
+    ClosureStrategyModel closureStrategyModel = new ClosureStrategyModel("1", null, null);
 
-    String line = JSONObject.toJSONString(user, SerializerFeature.DisableCircularReferenceDetect,
-        SerializerFeature.WriteNullNumberAsZero, SerializerFeature.WriteMapNullValue,
-        SerializerFeature.WriteNullListAsEmpty,
-        SerializerFeature.WriteNullStringAsEmpty);
+    String s = JSONObject.toJSONString(closureStrategyModel);
 
-    System.out.println(line);
+    System.out.println(s);
+
+    ClosureStrategyModel closureStrategyModel1 = JSONObject
+        .parseObject(s, ClosureStrategyModel.class);
+
+    System.out.println(null==closureStrategyModel1.getBanModel());
+    System.out.println(null==closureStrategyModel1.getFuseModel());
+
   }
 
 }
