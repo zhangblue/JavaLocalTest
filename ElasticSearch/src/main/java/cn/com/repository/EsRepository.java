@@ -24,7 +24,7 @@ public class EsRepository {
   private BulkProcessor bulkProcessor = null;
   private String strClusterName = "bangcle_es";
   private String strType = "bangcle_type";//写死的值，后续会废弃
-  private String strTransportHostNames = "172.16.36.123";
+  private String strTransportHostNames = "172.16.36.142";
   private Splitter splitter = Splitter.on(",").trimResults();
 
   /**

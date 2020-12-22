@@ -3,12 +3,14 @@ package cn.com.test;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.zhangblue.deserializer.DateCodecTest;
 import com.zhangblue.model.User;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import org.junit.Test;
 
@@ -113,5 +115,44 @@ public class TestJson {
             SerializerFeature.WriteNullListAsEmpty,
             SerializerFeature.WriteNullStringAsEmpty));
   }
+
+  @Test
+  public void testJsonToStrings() {
+    String json = "{\"data\":[\"aa\"]}";
+
+    JSONObject jsonObject = JSONObject.parseObject(json);
+
+    String[] data = jsonObject.getJSONArray("data").toArray(new String[1]);
+
+    for (String datum : data) {
+      System.out.println(datum);
+    }
+
+  }
+
+  @Test
+  public void testDate() {
+    DateCodecTest dateCodecTest = new DateCodecTest();
+    dateCodecTest.setCurrentDate(new Date());
+    String jsonLine = JSONObject.toJSONString(dateCodecTest);
+    System.out.println(jsonLine);
+
+    Date data_time = JSONObject.parseObject(jsonLine).getDate("data_time");
+    System.out.println(data_time.getTime());
+
+  }
+
+  @Test
+  public void testData2() {
+
+    Optional<String> optional = getOptional();
+    String cc = optional.orElse("cc");
+    System.out.println(cc);
+  }
+
+  public Optional<String> getOptional() {
+    return Optional.ofNullable("aaa");
+  }
+
 
 }

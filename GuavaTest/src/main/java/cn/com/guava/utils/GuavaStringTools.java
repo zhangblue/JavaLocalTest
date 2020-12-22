@@ -51,7 +51,8 @@ public class GuavaStringTools {
      * @return
      */
     public String trimManySpace(String strLine) {
-        return CharMatcher.WHITESPACE.collapseFrom(strLine, ' ');
+        return null;
+        //return CharMatcher.WHITESPACE.collapseFrom(strLine, ' ');
     }
 
     /**

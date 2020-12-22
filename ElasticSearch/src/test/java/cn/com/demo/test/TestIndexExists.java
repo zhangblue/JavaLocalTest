@@ -1,6 +1,8 @@
 package cn.com.demo.test;
 
 import cn.com.repository.EsRepository;
+import com.alibaba.fastjson.JSONArray;
+import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
 import java.util.Arrays;
 import java.util.List;
 import org.elasticsearch.action.admin.indices.alias.IndicesAliasesAction;
@@ -63,16 +65,32 @@ public class TestIndexExists {
         .addAlias(INDEX_NAME, ALIAS_NAME);
     indicesAliasesRequestBuilder.get();
 
-
-
     GetAliasesRequest zhangdi_test_alias = new GetAliasesRequest(ALIAS_NAME);
     GetAliasesResponse getAliasesResponse = esRepository.getClient().admin().indices()
         .getAliases(zhangdi_test_alias).actionGet();
 
-
     ImmutableOpenMap<String, List<AliasMetaData>> aliases = getAliasesResponse.getAliases();
     String[] indices = zhangdi_test_alias.indices();
     System.out.println(Arrays.asList(indices));
+  }
+
+  @Test
+  public void closeTest() {
+
+    GetAliasesResponse getAliasesResponse = esRepository.getClient().admin().indices()
+        .prepareGetAliases("test-zhangd").get();
+
+    for (ObjectObjectCursor<String, List<AliasMetaData>> alias : getAliasesResponse.getAliases()) {
+      System.out.println(alias.key + "====" + JSONArray.toJSONString(alias.value));
+    }
+
+//    IndicesStatsResponse indicesStatsResponse = esRepository.getClient().admin().indices()
+//        .prepareStats("bangcle_dev_fingerprint_20201021").get();
+
+//    int status = indicesStatsResponse.getStatus().getStatus();
+
+//    System.out.println(status);
+
   }
 
 }

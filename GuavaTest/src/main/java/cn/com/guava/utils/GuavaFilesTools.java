@@ -66,8 +66,8 @@ public class GuavaFilesTools {
    * @return
    */
   public Iterator<File> getFileTraversal(String strPath) {
-    Iterable<File> it = Files.fileTreeTraverser().breadthFirstTraversal(new File(strPath));
-    return it.iterator();
+    //Iterable<File> it = Files.fileTreeTraverser().breadthFirstTraversal(new File(strPath));
+    return null;
   }
 
   /***

@@ -24,6 +24,7 @@ import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
 import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
+import org.apache.hadoop.hbase.io.compress.Compression.Algorithm;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.After;
 import org.junit.Before;
@@ -85,8 +86,31 @@ public class TestDemo2 {
       System.out.println("error-----");
       e.printStackTrace();
     }
+  }
 
+  @Test
+  public void testGetComp() {
+    try {
+      Admin hbaseAdmin = connection.getAdmin();
 
+      TableName t_test_log = TableName.valueOf("bangcle_fdti_hxb_level");
+      HTableDescriptor tableDescriptor = hbaseAdmin
+          .getTableDescriptor(t_test_log);
+      HColumnDescriptor fdti = tableDescriptor.getFamily(Bytes.toBytes("fdti"));
+      Algorithm info = fdti.getCompressionType();
+      System.out.println(info);
+      if (info.equals(Algorithm.NONE)) {
+        fdti.setCompressionType(Algorithm.GZ);
+        hbaseAdmin.disableTable(t_test_log);
+        hbaseAdmin.modifyTable(t_test_log, tableDescriptor);
+        hbaseAdmin.enableTable(t_test_log);
+      }
+      System.out.println("11");
+      hbaseAdmin.compact(t_test_log);
+      System.out.println("222");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   @Test

@@ -1,0 +1,29 @@
+{
+  "magic": "4tzkDyqCU+Sz6obP5qeu8A==",
+  "ip_lan": "192.168.1.102",
+  "agent_id": "1474",
+  "start_id": 1593154536,
+  "client_time": "1598947508798",
+  "net_type": "NETWORK_WIFI",
+  "version": "502-502-502",
+  "platform": "android",
+  "protol_type": "env_check",
+  "major_version": "4.3",
+  "extra": {
+    "location": {
+      "latitude": 29.859552,
+      "longitude": 121.50095
+    }
+  },
+  "root": true,
+  "root_reason": "magisk_root, magisk UDS detect;",
+  "self_md5": "f1d52d6de32b1b14220ee9592eb5fd43",
+  "protol_version": 4,
+  "udid": "5f026ca9-821c-36be-86a0-57de9cd50299",
+  "msg_id": 6,
+  "values": [
+    "a",
+    "b",
+    "c"
+  ]
+}

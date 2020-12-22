@@ -1,7 +1,11 @@
 package cn.com.guava.utils;
 
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentSkipListMap;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import java.time.Duration;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author di.zhang
@@ -12,21 +16,23 @@ public class TestDemo {
 
   public static void main(String[] args) {
 
-    ConcurrentSkipListMap<Double, String> skipListMap = new ConcurrentSkipListMap<>();
+    Cache<String,String> cache = CacheBuilder.newBuilder().maximumSize(10).expireAfterWrite(10,
+        TimeUnit.MINUTES).expireAfterAccess(Duration.ofMillis(100)).build();
 
-    skipListMap.put(Double.valueOf(10), "a");
-    skipListMap.put(Double.valueOf(20), "a");
-    skipListMap.put(Double.valueOf(25), "a");
-    skipListMap.put(Double.valueOf(30), "a");
-    skipListMap.put(Double.valueOf(50), "a");
-    skipListMap.put(Double.valueOf(40), "a");
-
-    Entry<Double, String> doubleStringEntry = skipListMap.headMap(Double.valueOf(100)).lastEntry();
-
-    System.out.println(doubleStringEntry.getKey());
-    System.out.println(doubleStringEntry.getValue());
-
+    try {
+      cache.get("aaaaa", new Callable<String>() {
+        @Override
+        public String call() throws Exception {
+          return "yes";
+        }
+      });
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+    }
 
   }
+
+
+
 
 }
